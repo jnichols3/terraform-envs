@@ -13,5 +13,8 @@ The layout in this repo uses a centralized modules directory.  The included `atl
 ## environmental separation
 The separation of environments (prod and stage) along with the parametrization of these environments is done via the directory structure, the simplest approach.  There are alternatives available using workspaces, tfvars, terragrunt, and others, but these add complexity in exchange for the de-duplication of some code.  Besides instance sizes, counts and other environmental sizing parameters, environment specific IAM permissions, CICD automation gates (i.e. only apply approved pull requests) can be achieved by modifying the environment specific directories.  For example, only allow developers to SSH into stage EC2 instances or delete s3 buckets via automation in staging only.
 
+## sentinel
+Basic sentinel policies to enforce tags and VM types are configured using common policies with varying levels of enforcement depending on the environment.
+
 ## new projects
 There is a script, `new-tf.sh`, that you can give a project name and base provider type to and it will create a stage/prod project, link it to the base providers and setup.  A default `backend.tf` file is copied from the template project directory.  This can be modified with your specific backend and standardized across projects.  Note that atlantis.yaml or other CICD pull request automation needs to be updated or the script updated for your particular environment.
