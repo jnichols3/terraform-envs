@@ -1,0 +1,103 @@
+version: 3
+automerge: true
+delete_source_branch_on_merge: true
+projects:
+- name: init-prod
+  dir: projects/init/prod
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: defaultworkflow
+- name: ec2-prod
+  dir: projects/ec2/prod
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf", "../modules/**.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: defaultworkflow
+- name: eks-prod
+  dir: projects/eks/prod
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: defaultworkflow
+- name: iam-prod
+  dir: projects/iam/prod
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: defaultworkflow
+- name: vpc-prod
+  dir: projects/vpc/prod
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: defaultworkflow
+- name: init-stage
+  dir: projects/init/stage
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable]
+  workflow: defaultworkflow
+- name: ec2-stage
+  dir: projects/ec2-stage
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf", "../modules/**.tf"]
+    enabled: true
+  apply_requirements: [mergeable]
+  workflow: defaultworkflow
+- name: eks-stage
+  dir: projects/eks/stage
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable]
+  workflow: defaultworkflow
+- name: iam-stage
+  dir: projects/eks/iam
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable]
+  workflow: defaultworkflow
+- name: vpc-stage
+  dir: projects/vpc/stage
+  workspace: default
+  terraform_version: v0.15.0
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable]
+  workflow: defaultworkflow
+workflows:
+  defaultworkflow:
+    plan:
+      steps:
+      - init
+      - plan
+    apply:
+      steps:
+      - apply

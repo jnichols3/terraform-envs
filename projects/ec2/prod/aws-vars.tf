@@ -1,0 +1,1 @@
+../../../base/0.9/prod/aws-vars.tf
